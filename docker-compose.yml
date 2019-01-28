@@ -1,0 +1,36 @@
+version: '3.3'
+
+services:
+
+    node:
+        build:
+            context: ./node
+            args:
+                - NODE_VERSION=latest
+                - PROJECT_PATH=/opt/app/starwars-b2w-api
+                - NODE_ENV=development
+                - YARN=false
+                - DB_HOST=database
+                - DB_NAME=starwars_api
+                - DB_PORT=27017
+                - GIT_REPO=https://github.com/dario-monteiro/starwars-b2w-api.git
+
+        volumes:
+             - ./data/node/:/opt/app/starwars-b2w-api
+        entrypoint: run-nodock "node ."
+        tty: true
+        expose:
+             - "3000"
+        ports:
+             - 3000:3000
+        links:
+             - "mongo:database"
+
+    mongo:
+        build: ./mongo
+        expose:
+            - "27017"
+        ports:
+            - 27017:27017
+        volumes:
+            - ./data/mongo/:/var/lib/mongodb

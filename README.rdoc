@@ -1,0 +1,84 @@
+# starwars-b2w-api
+
+API Node.js StarWars (Integrada com swapi)
+
+
+
+Para testar, clone o repositório, após isso utilizar docker-compose:
+
+    docker-compose up
+
+
+Após o docker estiver up, utilizar os seguintes end-points no Postman:
+
+
+Adicionar:
+
+    URL (POST): http://localhost:3000/api/planeta
+
+    Headers-> Content-Type: application/json
+
+    Exemplo de Body:
+
+        {
+            "nome": "Tatooine",
+            "clima": "Quente",
+            "terreno": "Deserto"
+        }
+
+
+Observação importante:
+
+    Após a inclusão de um planeta no banco, o nome do planeta é procurado na API publica de StarWars (swapi),
+    e caso exista, é recuperada informação da quantidade de aparições em filmes (aparicoesEmFilmes),
+    esse valor é persistido em banco para consultas posteriores
+
+
+Listar:
+
+    URL (GET): http://localhost:3000/api/planetas
+
+    Headers-> Content-Type: application/json
+
+
+Buscar por Id:
+
+    URL (GET): http://localhost:3000/api/planeta/id=<id>
+
+    Headers-> Content-Type: application/json
+
+    <id> : id do documento obtido pelos end-points de listagem/buscas
+
+
+Buscar por Nome:
+
+    URL (GET): http://localhost:3000/api/planeta/nome=<nome>
+
+    Headers-> Content-Type: application/json
+
+    <nome> : nome do planeta anteriormente inserido no banco de dados, ex.: Tatooine
+
+
+Remover:
+
+    URL (DELETE): http://localhost:3000/api/planeta/id=<id>
+
+    Headers-> Content-Type: application/json
+
+    <id> : id do documento obtido pelos end-points de listagem/buscas
+
+
+
+Para executar os testes unitários
+
+
+Acesse a máquina docker:
+
+    docker exec -it <id> /bin/bash
+
+<id> : id da máquina docker de node, obtido pelo comando: docker ps
+
+
+executar comando no terminal da máquina (bash):
+
+    npm test (executa todos os testes unitários definidos no script de teste do package.json)
