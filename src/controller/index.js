@@ -1,8 +1,8 @@
-const dao = require('../dao')
-const Status = require('http-status')
-const swapi = require('swapi-node')
+const dao = require("../dao")
+const Status = require("http-status")
+const swapi = require("swapi-node")
 
-function procuraPlanetaSwapi(planeta, result) {
+function procuraPlanetaSwapi(planeta, result, response) {
 
     result.results.forEach(function (planet) {
         if (planet.name.toUpperCase() === planeta.nome.toUpperCase()) {
@@ -21,7 +21,7 @@ function procuraPlanetaSwapi(planeta, result) {
     }, this)
 
     return result.nextPage().then((result) => {
-        procuraPlanetaSwapi(planeta, result)
+        procuraPlanetaSwapi(planeta, result, response)
     }).catch((err) => {
         return
     })
@@ -51,7 +51,7 @@ exports.adicionar = (request, response, next) => {
                     response.status(Status.CREATED).send(result)
 
                     swapi.get("https://swapi.co/api/planets").then((result) => {
-                        procuraPlanetaSwapi(planeta, result)
+                        procuraPlanetaSwapi(planeta, result, response)
                     })
                 }
             })

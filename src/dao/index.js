@@ -1,5 +1,5 @@
-const database = require('../database')
-var ObjectId = require('mongodb').ObjectID;
+const database = require("../database")
+var ObjectId = require("mongodb").ObjectID
 
 function adicionar(planeta, callback) {
 
@@ -8,7 +8,7 @@ function adicionar(planeta, callback) {
         if (err) {
             return callback({ message: "Erro ao conectar com banco: " + err }, null)
         }
-        var colecao = db.collection("planetas");
+        var colecao = db.collection("planetas")
 
         var planeta_ins = {
             nome: planeta.nome,
@@ -33,7 +33,7 @@ function buscarPorId(id, callback) {
         if (err) {
             return callback({ message: "Erro ao conectar com banco: " + err }, null)
         }
-        var colecao = db.collection("planetas");
+        var colecao = db.collection("planetas")
 
         colecao.findOne({ _id: ObjectId(id) }, function (erro, resultado) {
             database.disconnect()
@@ -53,7 +53,7 @@ function buscarPorNome(nome, callback) {
         if (err) {
             return callback({ message: "Erro ao conectar com banco: " + err }, null)
         }
-        var colecao = db.collection("planetas");
+        var colecao = db.collection("planetas")
         var filtro = { nome: nome }
 
         colecao.findOne(filtro, function (erro, resultado) {
@@ -79,7 +79,7 @@ function alterarAparicoesFilmes(planeta, callback) {
                 aparicoesEmFilmes: planeta.aparicoesEmFilmes
             }
         }
-        var colecao = db.collection("planetas");
+        var colecao = db.collection("planetas")
         var filtro = { nome: planeta.nome }
 
         colecao.updateOne(filtro, planeta_alt, function (erro, resultado) {
@@ -100,7 +100,7 @@ function listar(callback) {
         if (err) {
             return callback({ message: "Erro ao conectar com banco: " + err }, null)
         }
-        var colecao = db.collection("planetas");
+        var colecao = db.collection("planetas")
         var filtro = {}
 
         colecao.find(filtro).toArray(function (erro, planetas) {
@@ -121,7 +121,7 @@ function remover(id, callback) {
         if (err) {
             return callback({ message: "Erro ao conectar com banco: " + err }, null)
         }
-        var colecao = db.collection("planetas");
+        var colecao = db.collection("planetas")
 
         colecao.deleteOne({ _id: ObjectId(id) }, function (erro, resultado) {
             database.disconnect()
